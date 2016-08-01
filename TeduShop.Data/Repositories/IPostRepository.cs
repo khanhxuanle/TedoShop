@@ -8,8 +8,8 @@ using TeduShop.Model.Models;
 
 namespace TeduShop.Data.Repositories
 {
-    public interface IProductCategoryRepository : IRepository<ProductCategory>
+    public interface IPostRepository : IRepository<Post>
     {
-        IEnumerable<ProductCategory> GetAsAlias(string alias);
+        IEnumerable<Post> GetAllByTag(string tag, int pageIndex, int pageSize, out int totalRow);
     }
 }

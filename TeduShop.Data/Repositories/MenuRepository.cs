@@ -8,8 +8,11 @@ using TeduShop.Model.Models;
 
 namespace TeduShop.Data.Repositories
 {
-    public interface IProductCategoryRepository : IRepository<ProductCategory>
+    public class MenuRepository : RepositoryBase<Menu>, IMenuRepository
     {
-        IEnumerable<ProductCategory> GetAsAlias(string alias);
+        public MenuRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+
+        }
     }
 }

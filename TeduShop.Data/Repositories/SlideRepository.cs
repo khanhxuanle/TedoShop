@@ -8,8 +8,10 @@ using TeduShop.Model.Models;
 
 namespace TeduShop.Data.Repositories
 {
-    public interface IProductCategoryRepository : IRepository<ProductCategory>
+    public class SlideRepository : RepositoryBase<Slide>, ISlideRepository
     {
-        IEnumerable<ProductCategory> GetAsAlias(string alias);
+        public SlideRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+        }
     }
 }

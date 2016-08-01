@@ -62,10 +62,5 @@ namespace TeduShop.Model.Models
 
         public virtual IEnumerable<ProductTag> ProductTags { set; get; }
 
-
-
-
-
-
     }
 }

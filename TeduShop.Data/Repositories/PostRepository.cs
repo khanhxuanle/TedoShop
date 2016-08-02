@@ -17,30 +17,28 @@ namespace TeduShop.Data.Repositories
 
         public IEnumerable<Post> GetAllByTag(string tag, int pageIndex, int pageSize, out int totalRow)
         {
-            //var query = DbContext.Posts.Join(DbContext.PostTags,
-            //    p => p.ID,
-            //    pT => pT.PostID,
-            //    (p, pT) => new {Post = p, PostTag = pT})
-            //    .Where(ppT => ppT.PostTag.TagID == tag)
-            //    .Select(ppT => new
-            //    {
-            //        ppT.Post
-            //    });
-
-            var query = from p in DbContext.Posts
-                join pt in DbContext.PostTags
-                    on p.ID equals pt.PostID
-                where pt.TagID == tag && p.Status
-                orderby  p.CreatedDate descending 
-                select p;
+            var query = DbContext.Posts.Join(DbContext.PostTags,
+                p => p.ID,
+                pT => pT.PostID,
+                (p, pT) => new {Post = p, PostTag = pT})
+                .Where(ppT => ppT.PostTag.TagID == tag)
+                .Select(ppT => ppT.Post);
+            //var query = from p in DbContext.Posts
+            //    join pt in DbContext.PostTags
+            //        on p.ID equals pt.PostID
+            //    where pt.TagID == tag && p.Status
+            //    orderby  p.CreatedDate descending 
+            //    select p;
 
             totalRow = query.Count();
 
             query = query.Skip((pageIndex - 1)*pageSize).Take(pageSize);
 
-            return query;
+            return query.AsEnumerable<Post>();
 
         }
+
+
     }
 }
 

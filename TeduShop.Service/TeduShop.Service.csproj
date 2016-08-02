@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorService.cs" />
+    <Compile Include="IErrorService.cs" />
     <Compile Include="IPostCategoryService.cs" />
     <Compile Include="IPostService.cs" />
     <Compile Include="PostCategoryService.cs" />

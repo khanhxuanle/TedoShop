@@ -20,9 +20,9 @@ namespace TeduShop.Service
             this.unitOfWork = unitOfWork;
         }
 
-        public void Add(PostCategory postCategory)
+        public PostCategory Add(PostCategory postCategory)
         {
-            postCategoryRepository.Add(postCategory);
+            return postCategoryRepository.Add(postCategory);
         }
 
         public void Update(PostCategory postCategory)
@@ -30,9 +30,9 @@ namespace TeduShop.Service
             postCategoryRepository.Update(postCategory);
         }
 
-        public void Delete(int id)
+        public PostCategory Delete(int id)
         {
-            postCategoryRepository.Delete(id);
+            return postCategoryRepository.Delete(id);
         }
 
         public IEnumerable<PostCategory> GetAll()
@@ -48,6 +48,11 @@ namespace TeduShop.Service
         public PostCategory GetById(int id)
         {
             return postCategoryRepository.GetSingleById(id);
+        }
+
+        public void Save()
+        {
+            unitOfWork.Commit();
         }
     }
 }

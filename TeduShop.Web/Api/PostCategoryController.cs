@@ -4,9 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using TeduShop.Model.Models;
 using TeduShop.Service;
 using TeduShop.Web.Infrastructure.Core;
+using TeduShop.Web.Models;
+using TeduShop.Web.Infrastructure.Extensions;
 
 namespace TeduShop.Web.Api
 {
@@ -20,7 +23,8 @@ namespace TeduShop.Web.Api
             this.postCategoryService = postCategoryService;
         }
 
-        public HttpResponseMessage Post(HttpRequestMessage request, PostCategory postCategory)
+        [Route("add")]
+        public HttpResponseMessage Post(HttpRequestMessage request, PostCategoryViewModel postCategoryViewModel)
         {
             return CreatHttpResponseMessage(request, () =>
             {
@@ -32,6 +36,11 @@ namespace TeduShop.Web.Api
                 }
                 else
                 {
+
+                    var postCategory = new PostCategory();
+
+                    postCategory.UpdatePostCategory(postCategoryViewModel);
+
                     var category = postCategoryService.Add(postCategory);
                     postCategoryService.Save();
 
@@ -42,7 +51,8 @@ namespace TeduShop.Web.Api
             });
         }
 
-        public HttpResponseMessage Put(HttpRequestMessage request, PostCategory postCategory)
+        [Route("update")]
+        public HttpResponseMessage Put(HttpRequestMessage request, PostCategoryViewModel postCategoryViewModel)
         {
             return CreatHttpResponseMessage(request, () =>
             {
@@ -54,6 +64,9 @@ namespace TeduShop.Web.Api
                 }
                 else
                 {
+                    var postCategory = postCategoryService.GetById(postCategoryViewModel.ID);
+                    postCategory.UpdatePostCategory(postCategoryViewModel);
+
                     postCategoryService.Update(postCategory);
                     postCategoryService.Save();
 
@@ -92,9 +105,11 @@ namespace TeduShop.Web.Api
             return CreatHttpResponseMessage(request, () =>
             {                
                 var listCategory = postCategoryService.GetAll();
-                postCategoryService.Save();
 
-                var response = request.CreateResponse(HttpStatusCode.OK, listCategory);
+                var listCategoryViewModel = Mapper.Map<List<PostCategoryViewModel>>(listCategory);
+
+
+                var response = request.CreateResponse(HttpStatusCode.OK, listCategoryViewModel);
 
                 return response;
             });

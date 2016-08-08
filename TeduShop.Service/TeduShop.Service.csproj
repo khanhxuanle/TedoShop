@@ -44,8 +44,10 @@
     <Compile Include="IErrorService.cs" />
     <Compile Include="IPostCategoryService.cs" />
     <Compile Include="IPostService.cs" />
+    <Compile Include="IProductCategoryService.cs" />
     <Compile Include="PostCategoryService.cs" />
     <Compile Include="PostService.cs" />
+    <Compile Include="ProductCategoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,5 +24,19 @@ namespace TeduShop.Web.Models
         public bool? HomeFlag { get; set; }
 
         public virtual IEnumerable<ProductViewModel> Products { get; set; }
+
+        public DateTime? CreatedDate { set; get; }
+
+        public string CreatedBy { set; get; }
+
+        public DateTime? UpdatedDate { set; get; }
+
+        public string UpdatedBy { set; get; }
+
+        public string MetaKeyword { set; get; }
+
+        public string MetaDescription { set; get; }
+
+        public bool Status { set; get; }
     }
 }

@@ -1,10 +1,5 @@
 ﻿(function () {
-    angular.module('tedushop.products', ['tedushop.common']).config(config);
-
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-    function config($stateProvider, $urlRouterProvider) {
-
+    angular.module('tedushop.products', ['tedushop.common']).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('products',
             {
@@ -18,5 +13,5 @@
                 templateUrl: "/app/components/products/productAddView.html",
                 controller: "productAddController"
             });
-    }
+    }]);
 })();

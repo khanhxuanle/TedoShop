@@ -50,6 +50,20 @@ namespace TeduShop.Service
             return productCategoryRepository.GetSingleById(id);
         }
 
+        public IEnumerable<ProductCategory> GetAll(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                return productCategoryRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
+            }
+            else
+            {
+                return productCategoryRepository.GetAll();
+            }
+            
+        }
+
+
         public void Save()
         {
             unitOfWork.Commit();

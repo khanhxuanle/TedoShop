@@ -15,6 +15,7 @@ namespace TeduShop.Service
         IEnumerable<ProductCategory> GetAll();
         IEnumerable<ProductCategory> GetAllByParentId(int parentId);
         ProductCategory GetById(int id);
+        IEnumerable<ProductCategory> GetAll(string keyword);
         void Save();
     }
 }

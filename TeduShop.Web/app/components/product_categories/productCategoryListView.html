@@ -30,6 +30,16 @@
         </div>
         <div class="box-body">
             <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="keywords" placeholder="Từ khóa"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="searchKeyword()">Tìm kiếm</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <tr>
@@ -57,4 +67,4 @@
             <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}" total-count="{{totalCount}}" search-func="getProductCategories(page)"></pager-directive>
         </div><!-- /.box-footer-->
     </div><!-- /.box -->
-</section><!-- /.content -->
+</section><!-- /.content -->S

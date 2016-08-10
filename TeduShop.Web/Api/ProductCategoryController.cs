@@ -23,13 +23,13 @@ namespace TeduShop.Web.Api
         }
 
         [Route("getall")]
-        public HttpResponseMessage GetAll(HttpRequestMessage requestMessage, int page, int pageSize = 20)
+        public HttpResponseMessage GetAll(HttpRequestMessage requestMessage, string keyword, int page, int pageSize = 20)
         {
             return CreatHttpResponseMessage(requestMessage, () =>
             {
                 int totalRow = 0;
 
-                var listCategory = productCategoryService.GetAll();
+                var listCategory = productCategoryService.GetAll(keyword);
 
                 totalRow = listCategory.Count();
 

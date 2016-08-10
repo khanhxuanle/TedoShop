@@ -28,32 +28,38 @@
             $scope.productCategories = [];
             $scope.page = 0;
             $scope.pagesCount = 0;
+            $scope.keywords = '';
 
             $scope.getProductCategories = function getProductCategories(page) {
-
-                page = page || 0;
-                // config paramester for url
-                var config = {
-                    params: {
-                        page: page,
-                        pageSize: 2
+                    page = page || 0;
+                    // config paramester for url
+                    var config = {
+                        params: {
+                            keyword: $scope.keywords,
+                            page: page,
+                            pageSize: 2
+                        }
                     }
-                }
-                // config paramester for url
+                    // config paramester for url
 
-                apiService.get('/api/productcategory/getall', config,
-                    function(result) {
-                        $scope.productCategories = result.data.Items;
-                        $scope.page = result.data.Page;
-                        $scope.pagesCount = result.data.TotalPages;
-                        $scope.totalCount = result.data.TotalCount;
-                    },
-                    function() {
-                        console.log('Load productcategory failed.');
-                    });
+                    apiService.get('/api/productcategory/getall', config,
+                        function (result) {
+                            $scope.productCategories = result.data.Items;
+                            $scope.page = result.data.Page;
+                            $scope.pagesCount = result.data.TotalPages;
+                            $scope.totalCount = result.data.TotalCount;
+                        },
+                        function () {
+                            console.log('Load productcategory failed.');
+                        });           
             }
 
             $scope.getProductCategories();
+
+            $scope.searchKeyword = function() {
+                //getProductCategories(page);
+                $scope.getProductCategories();
+            }
         }
     ]);
 })(angular.module('tedushop.products_category'));

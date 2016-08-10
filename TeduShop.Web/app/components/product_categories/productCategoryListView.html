@@ -38,6 +38,9 @@
                         </span>
                     </div>
                 </div>
+                <div class="col-md-6"> 
+                    <button class="btn btn-success" ui-sref="add_product_category">Thêm mới</button>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -59,12 +62,17 @@
                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"><span class="pull-right">Trang: {{page+1}} - Tổng số bản ghi: {{totalCount}}</span></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div><!-- /.box-body -->
         <div class="box-footer">
-            <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}" total-count="{{totalCount}}" search-func="getProductCategories(page)"></pager-directive>
+            <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}" total-count="{{totalCount}}" search-func="getProductCategories(page, false)"></pager-directive>
         </div><!-- /.box-footer-->
     </div><!-- /.box -->
-</section><!-- /.content -->S
+</section><!-- /.content -->

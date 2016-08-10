@@ -78,5 +78,38 @@ namespace TeduShop.Web.Infrastructure.Extensions
 
             post.Status = postViewModel.Status;
         }
+
+        public static void UpdatePostCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryViewModel)
+        {
+            productCategory.ID = productCategoryViewModel.ID;
+
+            productCategory.Name = productCategoryViewModel.Name;
+
+            productCategory.Alias = productCategoryViewModel.Alias;
+
+            productCategory.Description = productCategoryViewModel.Description;
+
+            productCategory.ParentID = productCategoryViewModel.ParentID;
+
+            productCategory.DisplayOrder = productCategoryViewModel.DisplayOrder;
+
+            productCategory.Image = productCategoryViewModel.Image;
+
+            productCategory.HomeFlag = productCategoryViewModel.HomeFlag;
+
+            productCategory.CreatedDate = productCategoryViewModel.CreatedDate;
+
+            productCategory.CreatedBy = productCategoryViewModel.CreatedBy;
+
+            productCategory.UpdatedDate = productCategoryViewModel.UpdatedDate;
+
+            productCategory.UpdatedBy = productCategoryViewModel.UpdatedBy;
+
+            productCategory.MetaKeyword = productCategoryViewModel.MetaKeyword;
+
+            productCategory.MetaDescription = productCategoryViewModel.MetaDescription;
+
+            productCategory.Status = productCategoryViewModel.Status;
+        }
     }
 }

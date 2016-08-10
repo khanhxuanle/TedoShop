@@ -8,6 +8,7 @@ using AutoMapper;
 using TeduShop.Model.Models;
 using TeduShop.Service;
 using TeduShop.Web.Infrastructure.Core;
+using TeduShop.Web.Infrastructure.Extensions;
 using TeduShop.Web.Models;
 
 namespace TeduShop.Web.Api
@@ -23,6 +24,7 @@ namespace TeduShop.Web.Api
         }
 
         [Route("getall")]
+        [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage requestMessage, string keyword, int page, int pageSize = 20)
         {
             return CreatHttpResponseMessage(requestMessage, () =>
@@ -32,7 +34,7 @@ namespace TeduShop.Web.Api
                 var listCategory = productCategoryService.GetAll(keyword);
 
                 totalRow = listCategory.Count();
-
+ 
                 var query = listCategory.OrderBy(x => x.CreatedDate).Skip(page*pageSize).Take(pageSize);
 
                 var listCategoryViewModel = Mapper.Map<IEnumerable<ProductCategory>,IEnumerable<ProductCategoryViewModel>>(query);
@@ -48,6 +50,51 @@ namespace TeduShop.Web.Api
 
                 var response = requestMessage.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
+            });
+        }
+
+        [Route("getallparents")]
+        [HttpGet]
+        public HttpResponseMessage GetAll(HttpRequestMessage requestMessage)
+        {
+            return CreatHttpResponseMessage(requestMessage, () =>
+            {
+
+                var listCategory = productCategoryService.GetAll();
+
+                var listCategoryViewModel = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(listCategory);
+
+                var response = requestMessage.CreateResponse(HttpStatusCode.OK, listCategoryViewModel);
+                return response;
+            });
+        }
+
+        [Route("create")]
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage Create(HttpRequestMessage requestMessage, ProductCategoryViewModel productCategoryViewModel)
+        {
+            return CreatHttpResponseMessage(requestMessage, () =>
+            {
+                HttpResponseMessage responseMessage = null;
+
+                if (!ModelState.IsValid)
+                {
+                    responseMessage = requestMessage.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var newProductCategory = new ProductCategory();
+                    newProductCategory.UpdatePostCategory(productCategoryViewModel);
+                    productCategoryService.Add(newProductCategory);
+                    productCategoryService.Save();
+
+                    var responData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(newProductCategory);
+
+                    responseMessage = requestMessage.CreateResponse(HttpStatusCode.Created, responData);
+                }
+                
+                return responseMessage;
             });
         }
     }

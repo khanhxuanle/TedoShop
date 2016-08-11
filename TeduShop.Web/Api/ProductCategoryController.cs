@@ -145,6 +145,57 @@ namespace TeduShop.Web.Api
             });
         }
 
+        //[Route("detele")]
+        //[HttpDelete]
+        //[AllowAnonymous]
+        //public HttpResponseMessage Delete(HttpRequestMessage requestMessage, int id)
+        //{
+        //    return CreatHttpResponseMessage(requestMessage, () =>
+        //    {
+        //        HttpResponseMessage responseMessage = null;
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            responseMessage = requestMessage.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+        //        }
+        //        else
+        //        {
+        //            var oldProductCategory =  productCategoryService.Delete(id);
+        //            productCategoryService.Save();
+
+        //            var responData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(oldProductCategory);
+
+        //            responseMessage = requestMessage.CreateResponse(HttpStatusCode.Created, responData);
+        //        }
+
+        //        return responseMessage;
+        //    });
+        //}
+
+        [Route("del")]
+        [HttpDelete]
+        [AllowAnonymous]
+        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
+        {
+            return CreatHttpResponseMessage(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var oldProductCategory = productCategoryService.Delete(id);
+                    productCategoryService.Save();
+
+                    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(oldProductCategory);
+                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                }
+
+                return response;
+            });
+        }
 
     }
 }

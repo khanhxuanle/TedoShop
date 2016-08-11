@@ -24,7 +24,7 @@
 (function(app) {
     app.controller('productCategoryListController',
     [
-        '$scope', 'apiService', 'notificationService', function ($scope, apiService, notificationService) {
+        '$scope', 'apiService', 'notificationService', '$ngBootbox', function ($scope, apiService, notificationService, $ngBootbox) {
             $scope.productCategories = [];
             $scope.page = 0;
             $scope.pagesCount = 0;
@@ -42,7 +42,7 @@
                 }
                 // config paramester for url
 
-                apiService.get('/api/productcategory/getall',
+                apiService.get('api/productcategory/getall',
                     config,
                     function (result) {
                         if (result.data.TotalCount == 0) {
@@ -67,6 +67,26 @@
             $scope.searchKeyword = function() {
                 $scope.getProductCategories(0, true);
             };
+
+            $scope.deleteProductCategory = function(id) {
+                $ngBootbox.confirm('Bạn có muốn xóa không?')
+                    .then(function() {
+                        var config = {
+                            params: {
+                                id: id
+                            }
+                        }
+                        apiService.del('api/productcategory/del',
+                            config,
+                            function (result) {
+                                notificationService.displaySuccess('Xoá thành công');
+                                $scope.getProductCategories(0, true);
+                            },
+                            function() {
+                                notificationService.displayError('Xoá không thành công');
+                            });
+                    });
+            }
         }
     ]);
 })(angular.module('tedushop.products_category'));

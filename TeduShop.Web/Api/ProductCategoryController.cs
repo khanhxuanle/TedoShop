@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 using AutoMapper;
 using TeduShop.Model.Models;
 using TeduShop.Service;
@@ -85,7 +86,7 @@ namespace TeduShop.Web.Api
                 else
                 {
                     var newProductCategory = new ProductCategory();
-                    newProductCategory.UpdatePostCategory(productCategoryViewModel);
+                    newProductCategory.UpdateProductCategory(productCategoryViewModel);
                     newProductCategory.CreatedDate = DateTime.Now;
                     productCategoryService.Add(newProductCategory);
                     productCategoryService.Save();
@@ -115,7 +116,7 @@ namespace TeduShop.Web.Api
                 else
                 {
                     var dbProductCategory = productCategoryService.GetById(productCategoryViewModel.ID);
-                    dbProductCategory.UpdatePostCategory(productCategoryViewModel);
+                    dbProductCategory.UpdateProductCategory(productCategoryViewModel);
                     dbProductCategory.UpdatedDate = DateTime.Now;
                     productCategoryService.Update(dbProductCategory);
                     productCategoryService.Save();
@@ -191,6 +192,35 @@ namespace TeduShop.Web.Api
 
                     var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(oldProductCategory);
                     response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                }
+
+                return response;
+            });
+        }
+
+        [Route("delmutile")]
+        [HttpDelete]
+        [AllowAnonymous]
+        public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedProductCategories)
+        {
+            return CreatHttpResponseMessage(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var listId = new JavaScriptSerializer().Deserialize<List<int>>(checkedProductCategories);
+
+                    foreach (var id in listId)
+                    {
+                        productCategoryService.Delete(id);
+                    }
+
+                    productCategoryService.Save();
+                    response = request.CreateResponse(HttpStatusCode.Created, listId.Count);
                 }
 
                 return response;

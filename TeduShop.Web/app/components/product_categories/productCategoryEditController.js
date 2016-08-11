@@ -8,7 +8,7 @@
             };
 
             $scope.UpdateProductCategory = function () {
-                apiService.put('api/productcategory/update', $scope.productCategory,
+                apiService.put('/api/productcategory/update', $scope.productCategory,
                 function (result) {
                     notificationService.displaySuccess(result.data.Name + ' đã được cập nhật.');
                     $state.go('products_category');

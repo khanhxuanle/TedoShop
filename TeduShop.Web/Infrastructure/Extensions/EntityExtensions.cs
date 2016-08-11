@@ -79,7 +79,7 @@ namespace TeduShop.Web.Infrastructure.Extensions
             post.Status = postViewModel.Status;
         }
 
-        public static void UpdatePostCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryViewModel)
+        public static void UpdateProductCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryViewModel)
         {
             productCategory.ID = productCategoryViewModel.ID;
 
@@ -110,6 +110,50 @@ namespace TeduShop.Web.Infrastructure.Extensions
             productCategory.MetaDescription = productCategoryViewModel.MetaDescription;
 
             productCategory.Status = productCategoryViewModel.Status;
+        }
+
+        public static void UpdateProduct(this Product product, ProductViewModel productViewModel)
+        {
+            product.ID = productViewModel.ID;
+
+            product.Name = productViewModel.Name;
+
+            product.Alias = productViewModel.Alias;
+
+            product.Description = productViewModel.Description;
+
+            product.CategoryID = productViewModel.CategoryID;
+
+            product.MoreImages = productViewModel.MoreImages;
+
+            product.Image = productViewModel.Image;
+
+            product.HomeFlag = productViewModel.HomeFlag;
+
+            product.CreatedDate = productViewModel.CreatedDate;
+
+            product.CreatedBy = productViewModel.CreatedBy;
+
+            product.UpdatedDate = productViewModel.UpdatedDate;
+
+            product.UpdatedBy = productViewModel.UpdatedBy;
+
+            product.Price = productViewModel.Price;
+
+            product.PromotionPrice = productViewModel.PromotionPrice;
+
+            product.Warranty = productViewModel.Warranty;
+
+            product.Content = productViewModel.Content;
+
+            product.HotFlag = productViewModel.HotFlag;
+
+            product.ViewCount = productViewModel.ViewCount;
+
+            product.Quantity = productViewModel.Quantity;
+
+            product.OriginalPrice = productViewModel.OriginalPrice;
+
         }
     }
 }

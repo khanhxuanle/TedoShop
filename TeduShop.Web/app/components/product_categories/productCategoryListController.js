@@ -24,13 +24,15 @@
 (function(app) {
     app.controller('productCategoryListController',
     [
-        '$scope', 'apiService', 'notificationService', '$ngBootbox', function ($scope, apiService, notificationService, $ngBootbox) {
+        '$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter', function ($scope, apiService, notificationService, $ngBootbox, $filter) {
             $scope.productCategories = [];
             $scope.page = 0;
             $scope.pagesCount = 0;
             $scope.keywords = '';
 
             $scope.getProductCategories = function (page, enableNotification) {
+                $scope.checkedAdd = false;
+                $scope.isAll = false;
                 page = page || 0;
                 // config paramester for url
                 var config = {
@@ -42,7 +44,7 @@
                 }
                 // config paramester for url
 
-                apiService.get('api/productcategory/getall',
+                apiService.get('/api/productcategory/getall',
                     config,
                     function (result) {
                         if (result.data.TotalCount == 0) {
@@ -76,7 +78,7 @@
                                 id: id
                             }
                         }
-                        apiService.del('api/productcategory/del',
+                        apiService.del('/api/productcategory/del',
                             config,
                             function (result) {
                                 notificationService.displaySuccess('Xoá thành công');
@@ -85,6 +87,56 @@
                             function() {
                                 notificationService.displayError('Xoá không thành công');
                             });
+                    });
+            }
+
+            $scope.checked = true;
+            $scope.isAll = false;
+
+            $scope.$watch("productCategories", function (n, o) {
+                var checked = $filter("filter")(n, { checked: true });
+                if (checked.length) {
+                    $scope.selected = checked;
+                    $scope.checked = false;
+                } else {
+                    $scope.checked = true;
+                }
+            }, true);
+
+            $scope.selectAll = function() {
+                if ($scope.isAll === false) {
+                    angular.forEach($scope.productCategories, function (item) {
+                        item.checked = true;
+                    });
+                    $scope.isAll = true;
+                } else {
+                    angular.forEach($scope.productCategories, function (item) {
+                        item.checked = false;
+                    });
+                    $scope.isAll = false;
+                }
+            }
+
+            $scope.deleteMutiple = function () {
+                var listId = [];
+                $.each($scope.selected,
+                    function(i, item) {
+                        listId.push(item.ID);
+                    });
+                var config = {
+                    params: {
+                        checkedProductCategories: JSON.stringify(listId)
+            }
+                }
+                apiService.del('/api/productcategory/delmutile',
+                    config,
+                    function(result) {
+                        notificationService.displaySuccess('Xoá thành công' + result.data + 'bản ghi');
+                        $scope.getProductCategories(0, true);
+                    },
+                    function(error) {
+                        notificationService.displayError('Xoá không thành công');
+                        $scope.getProductCategories(0, true);
                     });
             }
         }

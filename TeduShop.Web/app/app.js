@@ -58,14 +58,14 @@
                                 , 'tedushop.common']).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
                                     //
                                     // For any unmatched url, redirect to /state1
-                                    $urlRouterProvider.otherwise("/admin");
+                                   $urlRouterProvider.otherwise("/admin");
                                     //
                                     // Now set up the states
                                     $stateProvider
-                                      .state('home', {
-                                          url: "/admin",
-                                          templateUrl: "/app/components/home/homeView.html",
-                                          controller: "homeController"
-                                      });
+                                        .state('home', {
+                                            url: "/admin",
+                                            templateUrl: "/app/components/home/homeView.html",
+                                            controller: "homeController"
+                                        });
     }]); 
 })();

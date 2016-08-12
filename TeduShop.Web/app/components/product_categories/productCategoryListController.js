@@ -118,26 +118,29 @@
             }
 
             $scope.deleteMutiple = function () {
-                var listId = [];
-                $.each($scope.selected,
-                    function(i, item) {
-                        listId.push(item.ID);
-                    });
-                var config = {
-                    params: {
-                        checkedProductCategories: JSON.stringify(listId)
-            }
-                }
-                apiService.del('/api/productcategory/delmutile',
-                    config,
-                    function(result) {
-                        notificationService.displaySuccess('Xoá thành công' + result.data + 'bản ghi');
-                        $scope.getProductCategories(0, true);
-                    },
-                    function(error) {
-                        notificationService.displayError('Xoá không thành công');
-                        $scope.getProductCategories(0, true);
-                    });
+                $ngBootbox.confirm('Bạn có muốn xóa không?')
+                    .then(function() {
+                        var listId = [];
+                        $.each($scope.selected,
+                            function (i, item) {
+                                listId.push(item.ID);
+                            });
+                        var config = {
+                            params: {
+                                checkedProductCategories: JSON.stringify(listId)
+                            }
+                        }
+                        apiService.del('/api/productcategory/delmutile',
+                            config,
+                            function (result) {
+                                notificationService.displaySuccess('Xoá thành công' + result.data + 'bản ghi');
+                                $scope.getProductCategories(0, true);
+                            },
+                            function (error) {
+                                notificationService.displayError('Xoá không thành công');
+                                $scope.getProductCategories(0, true);
+                            });
+                    });           
             }
         }
     ]);

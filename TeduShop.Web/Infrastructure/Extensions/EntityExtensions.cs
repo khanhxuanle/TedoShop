@@ -154,6 +154,8 @@ namespace TeduShop.Web.Infrastructure.Extensions
 
             product.OriginalPrice = productViewModel.OriginalPrice;
 
+            product.Status = productViewModel.Status;
+
         }
     }
 }

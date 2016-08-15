@@ -4,7 +4,7 @@
     </div><!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Đăng nhập hệ thống</p>
-        <form action="#" method="post">
+        <form role="form" method="post" ng-submit="loginSubmit()">
             <div class="form-group has-feedback">
                 <input type="email" class="form-control" placeholder="Email">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -17,7 +17,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> Nhớ mật khâue
+                            <input type="checkbox"> Nhớ mật khẩu
                         </label>
                     </div>
                 </div><!-- /.col -->

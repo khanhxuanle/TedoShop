@@ -1,8 +1,10 @@
 ﻿(function(app) {
     app.controller('loginController',
-    [
-        function() {
-
+    ['$scope', '$state',
+        function ($scope, $state) {
+            $scope.loginSubmit = function() {
+                $state.go('home');
+            };
         }
     ]);
 })(angular.module('tedushop'));

@@ -58,12 +58,24 @@
                                 , 'tedushop.common']).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
                                     //
                                     // For any unmatched url, redirect to /state1
-                                   $urlRouterProvider.otherwise("/admin");
+                                    $urlRouterProvider.otherwise("/login");
                                     //
                                     // Now set up the states
                                     $stateProvider
+                                        .state('base',
+                                        {
+                                            url: '',
+                                            templateUrl: 'app/shared/views/baseView.html',
+                                            abstract: true
+                                        })
+                                        .state('login', {
+                                            url: "/",
+                                            templateUrl: "/app/components/login/loginView.html",
+                                            controller: "loginController"
+                                        })
                                         .state('home', {
                                             url: "/admin",
+                                            parent: 'base',
                                             templateUrl: "/app/components/home/homeView.html",
                                             controller: "homeController"
                                         });

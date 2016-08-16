@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using TeduShop.Model.Models;
+using ToduShop.Common;
 
 namespace TeduShop.Data.Migrations
 {
@@ -84,10 +85,15 @@ namespace TeduShop.Data.Migrations
 
                 context.ProductCategories.AddRange(listProductCategories);
                 context.SaveChanges();
-            }
-            
+            }                     
+        }
 
-            
+        private void CreateFooter(TeduShop.Data.TeduShopDbContext context)
+        {
+            if (context.Footers.Count(x => x.ID == CommonConstants.DEFAULTFOOTERID) == 0)
+            {
+                string Content = "";
+            }
         }
     }
 }

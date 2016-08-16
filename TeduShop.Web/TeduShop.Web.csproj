@@ -193,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\AccountController.cs" />
+    <Compile Include="Api\HomeController.cs" />
     <Compile Include="Api\PostCategoryController.cs" />
     <Compile Include="Api\ProductCategoryController.cs" />
     <Compile Include="Api\ProductController.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Infrastructure\Core\PaginationSet.cs" />
     <Compile Include="Infrastructure\Extensions\EntityExtensions.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
+    <Compile Include="Models\FooterViewModel.cs" />
     <Compile Include="Models\OrderDetailViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\PostCategoryViewModel.cs" />
@@ -249,7 +251,10 @@
     <Content Include="app\shared\modules\tedushop.common.js" />
     <Content Include="app\shared\services\apiService.js" />
     <Content Include="app\shared\filters\statusFilter.js" />
+    <Content Include="app\shared\services\authData.js" />
+    <Content Include="app\shared\services\authenticationService.js" />
     <Content Include="app\shared\services\commonService.js" />
+    <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\baseView.html" />
     <Content Include="Assets\admin\css\AdminLTE.css" />
@@ -314,6 +319,22 @@
     <Content Include="Assets\admin\js\demo.js" />
     <Content Include="Assets\admin\js\pages\dashboard.js" />
     <Content Include="Assets\admin\js\pages\dashboard2.js" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\build\loading-bar.css" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\build\loading-bar.js" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\build\loading-bar.min.css" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\build\loading-bar.min.js" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\Gruntfile.js" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\index.js" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\src\loading-bar.css" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\src\loading-bar.js" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.gitattributes" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.gitignore" />
+    <Content Include="Assets\admin\libs\angular-local-storage\demo\demo-app.js" />
+    <Content Include="Assets\admin\libs\angular-local-storage\demo\demo-style.css" />
+    <Content Include="Assets\admin\libs\angular-local-storage\demo\demo.html" />
+    <Content Include="Assets\admin\libs\angular-local-storage\dist\angular-local-storage.js" />
+    <Content Include="Assets\admin\libs\angular-local-storage\dist\angular-local-storage.min.js" />
+    <Content Include="Assets\admin\libs\angular-local-storage\index.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.min.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\src\common.js" />
@@ -4004,6 +4025,67 @@
     <Content Include="Assets\admin\libs\toastr\toastr.js" />
     <Content Include="Assets\admin\libs\toastr\toastr.min.css" />
     <Content Include="Assets\admin\libs\toastr\toastr.min.js" />
+    <Content Include="Assets\client\css\bootstrap.css" />
+    <Content Include="Assets\client\css\etalage.css" />
+    <Content Include="Assets\client\css\form.css" />
+    <Content Include="Assets\client\css\style.css" />
+    <Content Include="Assets\client\images\a-star.png" />
+    <Content Include="Assets\client\images\arrow1.png" />
+    <Content Include="Assets\client\images\arrow2.png" />
+    <Content Include="Assets\client\images\avatar.png" />
+    <Content Include="Assets\client\images\b-arrow.png" />
+    <Content Include="Assets\client\images\ba.jpg" />
+    <Content Include="Assets\client\images\baa.jpg" />
+    <Content Include="Assets\client\images\bag.jpg" />
+    <Content Include="Assets\client\images\bag1.jpg" />
+    <Content Include="Assets\client\images\bo.jpg" />
+    <Content Include="Assets\client\images\bott.jpg" />
+    <Content Include="Assets\client\images\bottle.jpg" />
+    <Content Include="Assets\client\images\ch.jpg" />
+    <Content Include="Assets\client\images\facebook.png" />
+    <Content Include="Assets\client\images\gpluse.png" />
+    <Content Include="Assets\client\images\img-sprite.png" />
+    <Content Include="Assets\client\images\label_new.png" />
+    <Content Include="Assets\client\images\logo.png" />
+    <Content Include="Assets\client\images\pi.jpg" />
+    <Content Include="Assets\client\images\pi1.jpg" />
+    <Content Include="Assets\client\images\pi2.jpg" />
+    <Content Include="Assets\client\images\pi3.jpg" />
+    <Content Include="Assets\client\images\pi4.jpg" />
+    <Content Include="Assets\client\images\pic.jpg" />
+    <Content Include="Assets\client\images\pic1.jpg" />
+    <Content Include="Assets\client\images\pic10.jpg" />
+    <Content Include="Assets\client\images\pic11.jpg" />
+    <Content Include="Assets\client\images\pic12.jpg" />
+    <Content Include="Assets\client\images\pic13.jpg" />
+    <Content Include="Assets\client\images\pic2.jpg" />
+    <Content Include="Assets\client\images\pic3.jpg" />
+    <Content Include="Assets\client\images\pic4.jpg" />
+    <Content Include="Assets\client\images\pic5.jpg" />
+    <Content Include="Assets\client\images\pic6.jpg" />
+    <Content Include="Assets\client\images\pic7.jpg" />
+    <Content Include="Assets\client\images\pic8.jpg" />
+    <Content Include="Assets\client\images\review.png" />
+    <Content Include="Assets\client\images\rss.png" />
+    <Content Include="Assets\client\images\s1.jpg" />
+    <Content Include="Assets\client\images\s2.jpg" />
+    <Content Include="Assets\client\images\s3.jpg" />
+    <Content Include="Assets\client\images\s4.jpg" />
+    <Content Include="Assets\client\images\sh.jpg" />
+    <Content Include="Assets\client\images\si1.jpg" />
+    <Content Include="Assets\client\images\si2.jpg" />
+    <Content Include="Assets\client\images\si3.jpg" />
+    <Content Include="Assets\client\images\si4.jpg" />
+    <Content Include="Assets\client\images\star.png" />
+    <Content Include="Assets\client\images\tick1.png" />
+    <Content Include="Assets\client\images\twitter.png" />
+    <Content Include="Assets\client\images\wa.jpg" />
+    <Content Include="Assets\client\images\wat.jpg" />
+    <Content Include="Assets\client\images\zoom.png" />
+    <Content Include="Assets\client\js\jquery.etalage.min.js" />
+    <Content Include="Assets\client\js\jquery.flexisel.js" />
+    <Content Include="Assets\client\js\jquery.min.js" />
+    <Content Include="Assets\client\js\jquery.wmuSlider.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -4028,7 +4110,6 @@
     <Folder Include="app\shared\footer\" />
     <Folder Include="app\shared\navigation\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\client\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
@@ -4287,6 +4368,54 @@
     <Content Include="Assets\admin\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\admin\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\admin\libs\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\admin\libs\angular-loading-bar\.bower.json" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\bower.json" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\CHANGELOG.md" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\CONTRIBUTING.md" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\ISSUE_TEMPLATE.md" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\LICENSE" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\package.json" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="Assets\admin\libs\angular-loading-bar\README.md" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.bower.json" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.bowerrc" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.editorconfig" />
+    <Content Include="Assets\admin\libs\angular-local-storage\.travis.yml" />
+    <Content Include="Assets\admin\libs\angular-local-storage\bower.json" />
+    <Content Include="Assets\admin\libs\angular-local-storage\CHANGELOG.md" />
+    <Content Include="Assets\admin\libs\angular-local-storage\dist\angular-local-storage.min.js.map" />
+    <Content Include="Assets\admin\libs\angular-local-storage\LICENSE" />
+    <Content Include="Assets\admin\libs\angular-local-storage\package.json" />
+    <Content Include="Assets\admin\libs\angular-local-storage\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConnectionStrings.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSettings.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Layouts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resource\bigshope-web.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\client\images\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Category.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

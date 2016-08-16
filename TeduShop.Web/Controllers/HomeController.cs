@@ -3,28 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using TeduShop.Data.Repositories;
+using TeduShop.Service;
+using TeduShop.Model.Models;
+using TeduShop.Web.Models;
 
 namespace TeduShop.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IProductCategoryService productCategoryService;
+        private ICommonService commonService;
+
+        public HomeController(IProductCategoryService productCategoryService, ICommonService commonService)
+        {
+            this.productCategoryService = productCategoryService;
+            this.commonService = commonService;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        [ChildActionOnly] // chi duoc goi tu tren url tu view ko duoc goi tren partialView
+        public ActionResult Footer()
         {
-            ViewBag.Message = "Your application description page.";
+            var footerModel = commonService.GetFooter();
+            var footerViewModel = Mapper.Map<Footer, FooterViewModel>(footerModel);
 
-            return View();
+            return PartialView(footerViewModel);
         }
 
-        public ActionResult Contact()
+        [ChildActionOnly]
+        public ActionResult Header()
         {
-            ViewBag.Message = "Your contact page.";
+            return PartialView();
+        }
 
-            return View();
+        [ChildActionOnly]
+        public ActionResult Category()
+        {
+            var model = productCategoryService.GetAll();
+            var listProductCategoryViewModel =  Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+            return PartialView(listProductCategoryViewModel);
         }
     }
 }

@@ -21,8 +21,9 @@
 //})(angular.module('tedushop.common'));
 
 (function (app) {
-    app.service('apiService', ['$http', 'notificationService', function ($http, notificationService) {
+    app.service('apiService', ['$http', 'notificationService', 'authenticationService', function ($http, notificationService, authenticationService) {
         function get(url, params, success, failure) {
+            authenticationService.setHeader();
             $http.get(url, params)
                 .then(function (result) {
                     success(result);
@@ -40,6 +41,7 @@
         };
 
         function post(url, data, success, failure) {
+            authenticationService.setHeader();
             $http.post(url, data)
                 .then(function(result) {
                         success(result);
@@ -56,6 +58,7 @@
         };
 
         function put(url, data, success, failure) {
+            authenticationService.setHeader();
             $http.put(url, data)
                 .then(function (result) {
                     success(result);
@@ -72,6 +75,7 @@
         };
 
         function del(url, data, success, failure) {
+            authenticationService.setHeader();
             $http.delete(url, data)
                 .then(function (result) {
                     success(result);

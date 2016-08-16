@@ -15,6 +15,7 @@ using TeduShop.Web.Models;
 namespace TeduShop.Web.Api
 {
     [RoutePrefix("api/productcategory")]
+    [Authorize]
     public class ProductCategoryController : ApiControllerBase
     {
         private IProductCategoryService productCategoryService;
@@ -88,6 +89,7 @@ namespace TeduShop.Web.Api
                     var newProductCategory = new ProductCategory();
                     newProductCategory.UpdateProductCategory(productCategoryViewModel);
                     newProductCategory.CreatedDate = DateTime.Now;
+                    newProductCategory.CreatedBy = User.Identity.Name;
                     productCategoryService.Add(newProductCategory);
                     productCategoryService.Save();
 
@@ -118,6 +120,7 @@ namespace TeduShop.Web.Api
                     var dbProductCategory = productCategoryService.GetById(productCategoryViewModel.ID);
                     dbProductCategory.UpdateProductCategory(productCategoryViewModel);
                     dbProductCategory.UpdatedDate = DateTime.Now;
+                    dbProductCategory.UpdatedBy = User.Identity.Name;
                     productCategoryService.Update(dbProductCategory);
                     productCategoryService.Save();
 

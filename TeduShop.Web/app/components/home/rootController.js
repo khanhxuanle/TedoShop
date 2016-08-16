@@ -1,10 +1,15 @@
 ﻿(function(app) {
     app.controller('rootController',
     [
-        '$scope', '$state', function ($scope, $state) {
-            $scope.logout = function() {
+        '$state', 'authData', 'loginService', '$scope', 'authenticationService',
+        function($state, authData, loginService, $scope, authenticationService) {
+            $scope.logOut = function() {
+                loginService.logOut();
                 $state.go('login');
-            };
+            }
+            $scope.authentication = authData.authenticationData;
+
+            authenticationService.validateRequest();
         }
     ]);
-})(angular.module('tedushop'));
+})(angular.module('tedushop'))

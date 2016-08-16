@@ -15,6 +15,8 @@ namespace TeduShop.Service
         IEnumerable<Product> GetAll();
         Product GetById(int id);
         IEnumerable<Product> GetAll(string keyword);
+        IEnumerable<Product> GetLastest(int top);
+        IEnumerable<Product> GetHotProducst(int top);
         void Save();
     }
 }

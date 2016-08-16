@@ -15,16 +15,33 @@ namespace TeduShop.Web.Controllers
     {
         private IProductCategoryService productCategoryService;
         private ICommonService commonService;
+        private IProductService productService;
 
-        public HomeController(IProductCategoryService productCategoryService, ICommonService commonService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, ICommonService commonService)
         {
             this.productCategoryService = productCategoryService;
             this.commonService = commonService;
+            this.productService = productService;
         }
 
         public ActionResult Index()
         {
-            return View();
+            var slides = commonService.GetSlides();
+            var slideViewModel = Mapper.Map<IEnumerable<Slide>, IEnumerable<SlideViewModel>>(slides);
+
+            var homeViewModel = new HomeViewModel();
+            homeViewModel.Slides = slideViewModel;
+
+            var lastetProduct = productService.GetLastest(3);
+            var topSaleProduct = productService.GetHotProducst(3);
+
+            var lastetProductViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(lastetProduct);
+            var topSaleProductViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(topSaleProduct);
+
+            homeViewModel.LastestProducts = lastetProductViewModel;
+            homeViewModel.TopSaleProducts = topSaleProductViewModel;
+
+            return View(homeViewModel);
         }
 
         [ChildActionOnly] // chi duoc goi tu tren url tu view ko duoc goi tren partialView

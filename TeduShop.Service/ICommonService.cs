@@ -10,5 +10,6 @@ namespace TeduShop.Service
     public interface ICommonService
     {
         Footer GetFooter();
+        IEnumerable<Slide> GetSlides();
     }
 }

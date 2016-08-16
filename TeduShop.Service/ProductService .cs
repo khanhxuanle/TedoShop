@@ -58,6 +58,16 @@ namespace TeduShop.Service
 
         }
 
+        public IEnumerable<Product> GetLastest(int top)
+        {
+            return productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.CreatedDate).Take(top);
+        }
+
+        public IEnumerable<Product> GetHotProducst(int top)
+        {
+            return productRepository.GetMulti(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top);
+        }
+
         public void Save()
         {
             unitOfWork.Commit();

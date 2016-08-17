@@ -156,6 +156,8 @@ namespace TeduShop.Web.Infrastructure.Extensions
 
             product.Status = productViewModel.Status;
 
+            product.Tags = productViewModel.Tags;
+
         }
     }
 }

@@ -4,6 +4,7 @@
     <title>Home</title>
     <link href="/Assets/client/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Assets/client/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Assets/admin/libs/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet" />
     <!--theme-style-->
     <link href="/Assets/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!--//theme-style-->
@@ -12,7 +13,7 @@
     <!--fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <!--//fonts-->
-    <script src="/Assets/client/js/jquery.min.js"></script>
+    
     <!--script-->
 </head>
 <body>
@@ -25,6 +26,11 @@
     </div>    
     @{Html.RenderAction("Footer", "Home"); }
     <div class="clearfix"></div>
-    @RenderSection("footerJs", required:false)
+
+    <script src="/Assets/client/js/jquery.min.js"></script>
+    <script src="~/Assets/admin/libs/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Assets/client/js/common.js"></script>
+
+@RenderSection("footerJs", required:false) 
 </body> 
 </html>

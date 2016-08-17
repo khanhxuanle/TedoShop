@@ -53,6 +53,8 @@ namespace TeduShop.Web.Models
 
         public bool Status { get; set; }
 
+        public string Tags { set; get; }
+
         public virtual ProductCategoryViewModel ProductCategory { get; set; }
 
         public virtual IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }

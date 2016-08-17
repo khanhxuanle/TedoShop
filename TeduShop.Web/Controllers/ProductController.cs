@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using AutoMapper;
 using TeduShop.Model.Models;
 using TeduShop.Service;
@@ -24,15 +25,29 @@ namespace TeduShop.Web.Controllers
         }
         // GET: Product
         public ActionResult Detail(int id)
-        {     
-            return View();
+        {
+            var product = productService.GetById(id);
+            var productModelView = Mapper.Map<Product, ProductViewModel>(product);
+
+            var relateProduct = productService.GetReatedProducts(id, 6);
+
+            ViewBag.RelateProduct = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(relateProduct);
+
+            var moreImages = productModelView.MoreImages;
+            List<string> listImage = new JavaScriptSerializer().Deserialize<List<string>>(moreImages);
+            ViewBag.MoreImage = listImage;
+          
+            var tags = productService.GetListTagByProductId(id);
+            ViewBag.Tags = Mapper.Map<IEnumerable<Tag>, IEnumerable<TagViewModel>>(tags);
+
+            return View(productModelView);
         }
 
-        public ActionResult Category(int id, int page = 1)
+        public ActionResult Category(int id, int page = 1, string sort = "")
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
             int totalRow = 0;
-            var productModel = productService.GetListPriProductsByCategoryPaging(id, page, pageSize, out totalRow);
+            var productModel = productService.GetListPriProductsByCategoryPaging(id, page, pageSize, sort, out totalRow);
 
             int totalPage = (int) Math.Ceiling((double) totalRow/pageSize);
 
@@ -51,6 +66,40 @@ namespace TeduShop.Web.Controllers
             ViewBag.Category = Mapper.Map<ProductCategory, ProductCategoryViewModel>(category);
 
             return View(paginationSet);
+        }
+
+        public ActionResult Search(string keyword, int page = 1, string sort = "")
+        {
+            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
+            int totalRow = 0;
+            var productModel = productService.Search(keyword, page, pageSize, sort, out totalRow);
+
+            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
+
+            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
+
+            var paginationSet = new PaginationSet<ProductViewModel>()
+            {
+                Items = productViewModel,
+                MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage")),
+                Page = page,
+                TotalCount = totalRow,
+                TotalPages = totalPage
+            };
+
+            ViewBag.KeyWord = keyword;
+
+            return View(paginationSet);
+        }
+
+        public JsonResult GetListProductByName(string keyword)
+        {
+            var model = productService.GetLisProductByName(keyword);
+            return Json(new
+            {
+                data = model
+            }, JsonRequestBehavior.AllowGet);
+
         }
         
     }

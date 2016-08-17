@@ -68,6 +68,15 @@ namespace TeduShop.Service
             return productRepository.GetMulti(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top);
         }
 
+        public IEnumerable<Product> GetListPriProductsByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow)
+        {
+            var query = productRepository.GetMulti(x => x.Status && x.CategoryID == categoryId);
+
+            totalRow = query.Count();
+
+            return query.Skip((page - 1)*pageSize).Take(pageSize);
+        }
+
         public void Save()
         {
             unitOfWork.Commit();

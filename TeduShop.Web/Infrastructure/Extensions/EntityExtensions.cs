@@ -159,5 +159,21 @@ namespace TeduShop.Web.Infrastructure.Extensions
             product.Tags = productViewModel.Tags;
 
         }
+
+        public static void UpdateFeedback(this Feedback feedback, FeedbackViewModel feedbackViewModel)
+        {
+            feedback.ID = feedbackViewModel.ID;
+
+            feedback.Name = feedbackViewModel.Name;
+
+            feedback.CreatDate = feedbackViewModel.CreatDate;
+
+            feedback.Email = feedbackViewModel.Email;
+
+            feedback.Message = feedbackViewModel.Message;
+
+            feedback.Status = feedbackViewModel.Status;
+           
+        }
     }
 }

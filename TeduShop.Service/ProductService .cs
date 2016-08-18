@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TeduShop.Data.Infrastructure;
 using TeduShop.Data.Repositories;
 using TeduShop.Model.Models;
+using ToduShop.Common;
 
 namespace TeduShop.Service
 {
@@ -14,22 +16,72 @@ namespace TeduShop.Service
         private IProductRepository productRepository;
         private IUnitOfWork unitOfWork;
         private IProductTagRepository productTagRepository;
+        private ITagRepository tagRepository;
 
-        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IProductTagRepository productTagRepository)
+        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IProductTagRepository productTagRepository, ITagRepository tagRepository)
         {
             this.productRepository = productRepository;
             this.unitOfWork = unitOfWork;
             this.productTagRepository = productTagRepository;
+            this.tagRepository = tagRepository;
         }
 
-        public Product Add(Product postCategory)
+        public Product Add(Product productCategory)
         {
-            return productRepository.Add(postCategory);
+            var product = productRepository.Add(productCategory);
+            unitOfWork.Commit();
+            if (!string.IsNullOrEmpty(productCategory.Tags))
+            {
+                string[] tags = productCategory.Tags.Split(',');
+                for (var i = 0; i < tags.Length; i++)
+                {
+                    var tag = tags[i].Trim();
+                    var tagId = StringHelper.ConvertToUnSign(tag);
+                    if (tagRepository.Count(x => x.ID == tagId) == 0)
+                    {
+                        Tag newtag = new Tag();
+                        newtag.ID = tagId;
+                        newtag.Name = tag;
+                        newtag.Type = CommonConstants.ProductTag;
+                        tagRepository.Add(newtag);
+                    }
+
+                    ProductTag productTag = new ProductTag();
+                    productTag.ProductID = productCategory.ID;
+                    productTag.TagID = tagId;
+                    productTagRepository.Add(productTag);
+                }
+            }
+            return product;
         }
 
-        public void Update(Product postCategory)
+        public void Update(Product productCategory)
         {
-            productRepository.Update(postCategory);
+            productRepository.Update(productCategory);
+            if (!string.IsNullOrEmpty(productCategory.Tags))
+            {
+                string[] tags = productCategory.Tags.Split(',');
+                for (var i = 0; i < tags.Length; i++)
+                {
+                    var tag = tags[i].Trim();
+                    
+                    var tagId = StringHelper.ConvertToUnSign(tag);
+                    if (tagRepository.Count(x => x.ID == tagId) == 0)
+                    {
+                        Tag newtag = new Tag();
+                        newtag.ID = tagId;
+                        newtag.Name = tag;
+                        newtag.Type = CommonConstants.ProductTag;
+                        tagRepository.Add(newtag);
+                    }
+                    productTagRepository.DeleteMulti(x => x.ProductID == productCategory.ID);
+                    ProductTag productTag = new ProductTag();
+                    productTag.ProductID = productCategory.ID;
+                    productTag.TagID = tagId;
+                    productTagRepository.Add(productTag);
+                }
+
+            }
         }
 
         public Product Delete(int id)
@@ -147,17 +199,19 @@ namespace TeduShop.Service
             {
                 product.ViewCount = 1;
             }
-
+             
         }
 
-        public IEnumerable<Product> GetListProductByTag(int tagId, int page, int pageSize, out int totalRow)
+        public IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
         {
-            var model = productRepository.GetMulti(x => x.Status && x.ProductTags.Count(y => y.ProductID == x.ID) > 0, new string[] {"ProductCategory", "ProductTags"});
+            var listProduct = productRepository.GetListProductByTag(tagId, page, pageSize, out totalRow);
 
+            return listProduct;
+        }
 
-            totalRow = model.Count();
-
-            return model.OrderByDescending(x => x.CreatedDate).Skip((page - 1)*pageSize).Take(page);
+        public Tag GetTag(string tagId)
+        {
+            return tagRepository.GetSingleByCondition(x => x.ID == tagId);
         }
 
         public void Save()

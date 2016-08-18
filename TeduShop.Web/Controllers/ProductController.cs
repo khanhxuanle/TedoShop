@@ -68,6 +68,30 @@ namespace TeduShop.Web.Controllers
             return View(paginationSet);
         }
 
+        public ActionResult ListByTag(string tagid, int page = 1)
+        {
+            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
+            int totalRow = 0;
+            var productModel = productService.GetListProductByTag(tagid, page, pageSize, out totalRow);
+
+            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
+
+            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
+
+            var paginationSet = new PaginationSet<ProductViewModel>()
+            {
+                Items = productViewModel,
+                MaxPage = int.Parse(ConfigHelper.GetByKey("MaxPage")),
+                Page = page,
+                TotalCount = totalRow,
+                TotalPages = totalPage
+            };
+
+            ViewBag.KeyWord = Mapper.Map<Tag, TagViewModel>(productService.GetTag(tagid));
+             
+            return View(paginationSet);
+        }
+
         public ActionResult Search(string keyword, int page = 1, string sort = "")
         {
             int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));

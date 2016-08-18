@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TeduShop.Web.Models.ProductViewModel
+@{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/Layouts.cshtml";
     var relateProduct = (IEnumerable<TeduShop.Web.Models.ProductViewModel>) ViewBag.RelateProduct;
@@ -82,15 +83,16 @@
             </div>
             <h6>@Model.Quantity sản phẩm trong kho</h6>
             <p>@Model.Description</p>
-            <div class="share">
+            <div class="tag">
                 <h5>Tag: </h5>
-                <ul class="share_nav">
+                <ul class="taglist">
                     @foreach (var tag in tags)
                     {
-                        <li><a href="/tag/@(tag.ID).html">@tag.Name</a></li>
+                        <li><a href="/tag/@(tag.ID).html">@tag.Name, </a></li>
                     }
                 </ul>
             </div>
+            <div class="clearfix"></div>
             <div class="share">
                 <h5>Chia sẻ: </h5>
                 <ul class="share_nav">

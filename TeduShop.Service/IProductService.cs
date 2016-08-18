@@ -23,7 +23,8 @@ namespace TeduShop.Service
         IEnumerable<Product> GetReatedProducts(int id, int top);
         IEnumerable<Tag> GetListTagByProductId(int id);
         void IncreaseView(int id);
-        IEnumerable<Product> GetListProductByTag(int tagId, int page, int pageSize, out int totalRow);
+        IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
+        Tag GetTag(string tagId);
         void Save();
     }
 }

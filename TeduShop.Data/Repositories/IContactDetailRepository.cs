@@ -8,8 +8,7 @@ using TeduShop.Model.Models;
 
 namespace TeduShop.Data.Repositories
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IContactDetailRepository : IRepository<ContactDetail>
     {
-        IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
     }
 }

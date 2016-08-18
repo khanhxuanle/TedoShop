@@ -1,0 +1,78 @@
+﻿@model TeduShop.Web.Models.ContactDetailViewModel
+
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+@section footerJs {
+    @*<script src="~/Assets/client/js/Controller/Contact.js"></script>*@
+    <script>
+
+          // This example displays a marker at the center of Australia.
+          // When the user clicks the marker, an info window opens.
+
+          function initMap() {
+            var uluru = {lat: @Model.Lat, lng: @Model.Lng};
+            var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 15,
+              center: uluru
+            });
+
+            var contentString = $('#hidContactDetail').val();
+
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+              position: uluru,
+              map: map,
+              title: 'Uluru (Ayers Rock)'
+            });
+            marker.addListener('click', function() {         
+            });
+            infowindow.open(map, marker);
+          }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jfGhH3OqcthIeuDbAdsEhJ8Y8LLFGU&callback=initMap"></script>
+}
+
+<style>
+    #map {
+        height: 400px; }
+</style>
+
+<input type="hidden" id="hidContactDetail" value="@Model.Address"/>
+<div class="main">
+    <div class="reservation_top">
+        <div class="contact_right">
+            <h3>Thông tin liên hệ</h3>
+            <address class="address">
+                <p>@Model.Address</p>
+                <dl>
+                    <dt> </dt>
+                    <dd>Điện thoại:<span> @Model.Phone</span></dd>
+                    <dd>E-mail:&nbsp; <a href="mailto:@(Model.Email)">@(Model.Email)</a></dd>
+                </dl>
+            </address>
+            <div class="clearfix"></div>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="reservation_top">
+        <div class="contact_right">
+            <h3>Contact Form</h3>
+            <div class="contact-form">
+                <form method="post" action="contact-post.html">
+                    <input type="text" class="textbox" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') { this.value = 'Name'; }">
+                    <input type="text" class="textbox" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') { this.value =
+    'Email'; }">
+                    <textarea value="Message" onfocus="this.value = '';" onblur="if (this.value == '') { this.value = 'Message'; }">Message</textarea>
+                    <input type="submit" value="Send">
+                    <div class="clearfix"> </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

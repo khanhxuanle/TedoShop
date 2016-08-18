@@ -84,11 +84,27 @@
     <Compile Include="Migrations\201608170910402_EditProduct.Designer.cs">
       <DependentUpon>201608170910402_EditProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608180708454_Feedback.cs" />
+    <Compile Include="Migrations\201608180708454_Feedback.Designer.cs">
+      <DependentUpon>201608180708454_Feedback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608180711110_Feedbck2.cs" />
+    <Compile Include="Migrations\201608180711110_Feedbck2.Designer.cs">
+      <DependentUpon>201608180711110_Feedbck2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608180741165_Contactdetail.cs" />
+    <Compile Include="Migrations\201608180741165_Contactdetail.Designer.cs">
+      <DependentUpon>201608180741165_Contactdetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ContactDetailRepository.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\FooterRepository.cs" />
+    <Compile Include="Repositories\IContactDetailRepository.cs" />
     <Compile Include="Repositories\IErrorRepository.cs" />
+    <Compile Include="Repositories\IFeedbackRepository.cs" />
     <Compile Include="Repositories\IFooterRepository.cs" />
     <Compile Include="Repositories\IMenuGroupRepository.cs" />
     <Compile Include="Repositories\IMenuRepository.cs" />
@@ -155,6 +171,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608170910402_EditProduct.resx">
       <DependentUpon>201608170910402_EditProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608180708454_Feedback.resx">
+      <DependentUpon>201608180708454_Feedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608180711110_Feedbck2.resx">
+      <DependentUpon>201608180711110_Feedbck2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608180741165_Contactdetail.resx">
+      <DependentUpon>201608180741165_Contactdetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

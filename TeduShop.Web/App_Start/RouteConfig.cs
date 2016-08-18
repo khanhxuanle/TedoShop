@@ -12,19 +12,26 @@ namespace TeduShop.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            routes.MapRoute(
-                name: "About",
-                url: "gioi-thieu.html",
-                defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "TeduShop.Web.Controllers" }
-            );
-
+         
             routes.MapRoute(
                 name: "Login",
                 url: "dang-nhap.html",
                 defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Page",
+                url: "page/{alias}.html",
+                defaults: new { controller = "Page", action = "Index", alias = UrlParameter.Optional },
+                namespaces: new string[] { "TeduShop.Web.Controllers" }
+            );
+
+            routes.MapRoute(
+                  name: "Contact",
+                  url: "lien-he.html",
+                  defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
+                  namespaces: new string[] { "TeduShop.Web.Controllers" }
+              );
 
             routes.MapRoute(
                   name: "Search",
@@ -41,9 +48,16 @@ namespace TeduShop.Web
             );
 
             routes.MapRoute(
-                name: "Product",
+                name: "Product", 
                 url: "{alias}.p-{id}.html",
                 defaults: new { controller = "Product", action = "Detail", id = UrlParameter.Optional },
+                namespaces: new string[] { "TeduShop.Web.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "TagList",
+                url: "tag/{tagid}.html",
+                defaults: new { controller = "Product", action = "ListByTag", tagid = UrlParameter.Optional },
                 namespaces: new string[] { "TeduShop.Web.Controllers" }
             );
 

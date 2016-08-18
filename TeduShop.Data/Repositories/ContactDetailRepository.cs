@@ -8,8 +8,10 @@ using TeduShop.Model.Models;
 
 namespace TeduShop.Data.Repositories
 {
-    public interface IProductRepository : IRepository<Product>
+    public class ContactDetailRepository : RepositoryBase<ContactDetail>, IContactDetailRepository
     {
-        IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
+        public ContactDetailRepository(IDbFactory dbFactory) : base(dbFactory)
+        {
+        }
     }
 }

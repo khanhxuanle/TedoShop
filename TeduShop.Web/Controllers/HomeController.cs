@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using AutoMapper;
 using TeduShop.Data.Repositories;
 using TeduShop.Service;
@@ -45,10 +46,13 @@ namespace TeduShop.Web.Controllers
         }
 
         [ChildActionOnly] // chi duoc goi tu tren url tu view ko duoc goi tren partialView
+        [OutputCache(Duration = 3600)]
         public ActionResult Footer()
         {
             var footerModel = commonService.GetFooter();
             var footerViewModel = Mapper.Map<Footer, FooterViewModel>(footerModel);
+
+            ViewBag.Time = DateTime.Now.ToString("T");
 
             return PartialView(footerViewModel);
         }
@@ -60,6 +64,7 @@ namespace TeduShop.Web.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult Category()
         {
             var model = productCategoryService.GetAll();

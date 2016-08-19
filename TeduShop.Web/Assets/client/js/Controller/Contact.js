@@ -7,11 +7,10 @@
         contact.initMap();
     },
 
-    initMap: function() {
-        var uluru = { lat: -25.363, lng: 131.044 };
-        var map = new google.maps.Map(document.getElementById('map'),
-        {
-            zoom: 4,
+    initMap:  function () {
+        var uluru = { lat: parseFloat($('#hidLat').val()), lng: parseFloat($('#hidLng').val()) };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
             center: uluru
         });
 
@@ -24,12 +23,12 @@
         var marker = new google.maps.Marker({
             position: uluru,
             map: map,
-            title: 'Uluru (Ayers Rock)'
+            title: $('#hidName').val()
         });
-        marker.addListener('click',
-            function() {
-                infowindow.open(map, marker);
-            });
+        marker.addListener('click', function() {       
+            infowindow.open(map, marker);
+        });
+            
     }
 }
 

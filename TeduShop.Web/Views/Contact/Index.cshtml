@@ -1,4 +1,10 @@
-﻿@model TeduShop.Web.Models.ContactDetailViewModel
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using BotDetect.Web.Mvc;
+
+@model TeduShop.Web.Models.FeedbackViewModel
+
+@*<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css"/>*@
 
 @{
     ViewBag.Title = "Liên hệ";
@@ -6,36 +12,8 @@
 }
 
 @section footerJs {
-    @*<script src="~/Assets/client/js/Controller/Contact.js"></script>*@
-    <script>
-
-          // This example displays a marker at the center of Australia.
-          // When the user clicks the marker, an info window opens.
-
-          function initMap() {
-            var uluru = {lat: @Model.Lat, lng: @Model.Lng};
-            var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 15,
-              center: uluru
-            });
-
-            var contentString = $('#hidContactDetail').val();
-
-            var infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
-
-            var marker = new google.maps.Marker({
-              position: uluru,
-              map: map,
-              title: 'Uluru (Ayers Rock)'
-            });
-            marker.addListener('click', function() {         
-            });
-            infowindow.open(map, marker);
-          }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jfGhH3OqcthIeuDbAdsEhJ8Y8LLFGU&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jfGhH3OqcthIeuDbAdsEhJ8Y8LLFGU"></script>
+    <script src="~/Assets/client/js/Controller/Contact.js"></script>
 }
 
 <style>
@@ -43,17 +21,23 @@
         height: 400px; }
 </style>
 
-<input type="hidden" id="hidContactDetail" value="@Model.Address"/>
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+<input type="hidden" id="hidContactDetail" value="@Model.ContactDetail.Name"/>
+<input type="hidden" id="hidLat" value="@Model.ContactDetail.Lat"/>
+<input type="hidden" id="hidLng" value="@Model.ContactDetail.Lng"/>
+<input type="hidden" id="hidName" value="@Model.ContactDetail.Address"/>
+
+
 <div class="main">
     <div class="reservation_top">
         <div class="contact_right">
             <h3>Thông tin liên hệ</h3>
             <address class="address">
-                <p>@Model.Address</p>
+                <p>@Model.ContactDetail.Address</p>
                 <dl>
                     <dt> </dt>
-                    <dd>Điện thoại:<span> @Model.Phone</span></dd>
-                    <dd>E-mail:&nbsp; <a href="mailto:@(Model.Email)">@(Model.Email)</a></dd>
+                    <dd>Điện thoại:<span> @Model.ContactDetail.Phone</span></dd>
+                    <dd>E-mail:&nbsp; <a href="mailto:@(Model.ContactDetail.Email)">@(Model.ContactDetail.Email)</a></dd>
                 </dl>
             </address>
             <div class="clearfix"></div>
@@ -62,16 +46,29 @@
     </div>
     <div class="reservation_top">
         <div class="contact_right">
-            <h3>Contact Form</h3>
+            <h3>Gửi thông tin liên hệ</h3>
             <div class="contact-form">
-                <form method="post" action="contact-post.html">
-                    <input type="text" class="textbox" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') { this.value = 'Name'; }">
-                    <input type="text" class="textbox" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') { this.value =
-    'Email'; }">
-                    <textarea value="Message" onfocus="this.value = '';" onblur="if (this.value == '') { this.value = 'Message'; }">Message</textarea>
-                    <input type="submit" value="Send">
+                @using (Html.BeginForm("SendFeedback", "Contact", FormMethod.Post))
+                {
+                    if (ViewData["SuccessMsg"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <strong>Chúc mừng bạn </strong>đã gửi phản hồi thành công.
+                            <br>Chúng tôi sẽ liên hệ lại sớm nhất. 
+                        </div>
+                    }
+                    @Html.ValidationSummary(false, "", new { @class = "error" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "textbox" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "textbox" })
+                    @Html.TextAreaFor(model => model.Message)
+                    {
+                        MvcCaptcha contactCaptcha = new MvcCaptcha("ContactCaptcha");
+                        @Html.Captcha(contactCaptcha)
+                        @Html.TextBox("CaptchaCode")
+                    }
+                    <input type="submit" value="Gửi đi" />
                     <div class="clearfix"> </div>
-                </form>
+                }
             </div>
         </div>
     </div>

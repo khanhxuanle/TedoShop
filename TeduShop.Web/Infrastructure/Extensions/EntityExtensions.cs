@@ -166,7 +166,7 @@ namespace TeduShop.Web.Infrastructure.Extensions
 
             feedback.Name = feedbackViewModel.Name;
 
-            feedback.CreatDate = feedbackViewModel.CreatDate;
+            feedback.CreatDate = DateTime.Now;
 
             feedback.Email = feedbackViewModel.Email;
 

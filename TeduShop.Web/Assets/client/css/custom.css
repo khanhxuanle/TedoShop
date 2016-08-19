@@ -13,3 +13,7 @@
 .top-header-left a {
     color: white;
 }
+
+.error {
+    color: red;
+}

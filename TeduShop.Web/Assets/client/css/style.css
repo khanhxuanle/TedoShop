@@ -404,6 +404,7 @@ width: 49%;
 }
 .latest-product,.dolor-grid{
 	float:left;
+    width: 100%;    
 }
 .view-all,a.get-cart{
 	float:right;

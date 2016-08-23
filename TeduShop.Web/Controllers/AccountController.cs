@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeduShop.Web.Models;
 
 namespace TeduShop.Web.Controllers
 {
@@ -13,5 +14,18 @@ namespace TeduShop.Web.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            return View();
+        }
+
     }
 }

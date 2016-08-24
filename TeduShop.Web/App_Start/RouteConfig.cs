@@ -78,6 +78,10 @@ namespace TeduShop.Web
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "TeduShop.Web.Controllers" }
             );
+
+            routes.MapRoute("Error",
+                "{*url}",
+                new { controller = "Error", action = "Http404" });
         }
     }
 }
